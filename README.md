@@ -1,2 +1,3 @@
 # StringThang
-Generate Large amounts of Random FirstName, LastName, custom Email, custom Password in Python quickly
+Collection of Python scripts to:
+Generate Large amounts of Random FirstName, LastName, custom Email, custom Password quickly
