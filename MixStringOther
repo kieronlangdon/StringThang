@@ -1,0 +1,45 @@
+import sys,string,random,getopt
+
+
+def show_help():
+	print './MixStringOther.py <AmountOfNamesRequired> <OrgStartNumber> <emailAddress> <OrgParentID>'
+	print './MixStringOther.py 2 6000 @something.com 00000020002030003000005600000006'
+	print 'Outputs:\n Num:1,Org6000,Active,MickFlannery,MickFlannery@something.com,6000,\n Num:2,Org6001,JoeJose,JoeJose@something.com,00000000000000000000004600000001'
+	print 'Outputs: int,"text","text","text", int,'
+	
+
+	
+	
+def main(argv):
+	try:
+		opts, args = getopt.getopt(argv,"h",["help"])
+	except getopt.GetoptError, e:
+		print e
+		sys.exit(2)
+	for opt, arg in opts:
+		if (opt == '-h') or (opt == '--help'):
+			show_help()
+			sys.exit()
+	if (len(sys.argv) == 1):
+		show_help()
+		sys.exit(0)
+	OrgStartNumber = int(sys.argv[2])
+	emailAddress = str(sys.argv[3])
+	OrgParentID = str(sys.argv[4])
+	
+	#with open("TestMembers.txt") as f:
+	with open("yob1880.txt") as f:
+		FileToRead = f.read().split('\n')
+
+	rows = int(sys.argv[1])
+	Org = int(OrgStartNumber)
+	for num in range(0,rows):
+			
+		
+		#read in 2 values from file
+		RandoName = ''.join(random.sample((FileToRead),2))
+		print ("Number:%s,Org%s,%s,%s%s,%s" % (num+1,Org,RandoName,RandoName,emailAddress,OrgParentID))
+		Org +=1
+
+if __name__ == "__main__":
+	main(sys.argv[1:])
