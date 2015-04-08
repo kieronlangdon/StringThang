@@ -1,0 +1,34 @@
+import getopt,sys,string,re
+
+def show_help():
+	print './ValidateEmail.py <emailAddress>'
+	print './ValidateEmail.py  as@something.com'
+	print 'Outputs: Valid E-mail - :as@something.com'
+	print './ValidateEmail.py asasdsadsasa'
+	print 'Outputs: Invalid E-mail - :asasdsadsasa'
+	print 'Outputs: "text"'
+	
+def main(argv):
+	try:
+		opts, args = getopt.getopt(argv,"h",["help"])
+	except getopt.GetoptError, e:
+		print e
+		sys.exit(2)
+	for opt, arg in opts:
+		if (opt == '-h') or (opt == '--help'):
+			show_help()
+			sys.exit()
+	if (len(sys.argv) == 1):
+		show_help()
+		sys.exit(0)
+	emailAddress = str(sys.argv[1])
+	if len(emailAddress) and len(emailAddress) <254:
+			if re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", emailAddress):
+				print ("Valid E-mail - :%s" % (emailAddress))
+			else:
+				print ("Invalid E-mail - :%s" % (emailAddress))
+	else:
+			print ("Invalid E-mail - :%s" % (emailAddress))
+	
+if __name__ == "__main__":
+	main(sys.argv[1:])
