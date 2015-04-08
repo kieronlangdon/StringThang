@@ -1,11 +1,11 @@
-import sys,string,random,getopt
+import sys,string,random,getopt,re
 
 
 def show_help():
 	print './MixStringOther.py <AmountOfNamesRequired> <OrgStartNumber> <emailAddress> <OrgParentID>'
 	print './MixStringOther.py 2 6000 @something.com 00000020002030003000005600000006'
 	print 'Outputs:\n Num:1,Org6000,Active,MickFlannery,MickFlannery@something.com,6000,\n Num:2,Org6001,JoeJose,JoeJose@something.com,00000000000000000000004600000001'
-	print 'Outputs: int,"text","text","text", int,'
+	print 'Outputs: int,"text","text","text", "text",'
 	
 
 	
@@ -26,6 +26,7 @@ def main(argv):
 	OrgStartNumber = int(sys.argv[2])
 	emailAddress = str(sys.argv[3])
 	OrgParentID = str(sys.argv[4])
+	EmailCount = 0
 	
 	#with open("TestMembers.txt") as f:
 	with open("yob1880.txt") as f:
@@ -38,6 +39,15 @@ def main(argv):
 		
 		#read in 2 values from file
 		RandoName = ''.join(random.sample((FileToRead),2))
+		if len(RandoName+emailAddress) and emailAddress != None and len(RandoName+emailAddress) <254:
+			if re.match("^[a-zA-Z0-9._%-]+@[a-zA-Z0-9._%-]+.[a-zA-Z]{2,6}$", RandoName+emailAddress):
+				EmailCount +=1
+			else:
+				print ("Invalid Length E-mail -- :%s" % (emailAddress))
+				sys.exit(0)
+		else:
+			print ("Invalid E-mail - :%s" % (RandoName+emailAddress))
+			sys.exit(0)
 		print ("Number:%s,Org%s,%s,%s%s,%s" % (num+1,Org,RandoName,RandoName,emailAddress,OrgParentID))
 		Org +=1
 
